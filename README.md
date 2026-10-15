@@ -187,4 +187,5 @@ docs/            architecture, setup, testing, deployment, menu provenance
 
 Licensed for Gallops Restaurant. Menu content belongs to the restaurant; third-party
 price data is reproduced for internal use and must be verified before publication.
+
 # Gallops-Restaurant
