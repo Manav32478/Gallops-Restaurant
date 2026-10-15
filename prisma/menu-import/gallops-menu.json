@@ -1,0 +1,379 @@
+{
+  "_meta": {
+    "restaurant": "Gallops Restaurant (a unit of Gallops Food Plaza)",
+    "slug": "gallops",
+    "location": "Shree Mandhata Circle, nr. Dr. Bhutak Clinic, Mahuva, Gujarat 364290, India",
+    "primarySource": {
+      "name": "Restaurant Guru — Gallops Restaurant Mahuva (menu page)",
+      "url": "https://restaurant-guru.in/Gallops-Restaurant-Mahuva/menu",
+      "retrievedAt": "2026-10-14",
+      "notes": "Menu page exposes scanned menu-card images only (no machine-readable item list). OCR of the published menu-card image (https://menu02.restaurantguru.com/m2/menu-Gallops-Food-Plaza-Mahuva-en9.jpg) recovered the brand, tagline and the top-level cuisine sections (Punjabi, South Indian, Chinese, Snacks, Beverages, Desserts) but NO item names or prices."
+    },
+    "itemSource": {
+      "name": "Zomato — Gallops Restaurant Eateria, Mahuva Locality (online ordering menu)",
+      "url": "https://www.zomato.com/mahuva/gallops-restaurant-eateria-mahuva-locality/menu",
+      "retrievedAt": "2026-10-14",
+      "notes": "Publicly rendered online-ordering menu. 170 items across 11 categories with sub-sections. Prices are the ONLINE DELIVERY prices published on Zomato and are NOT confirmed to match in-restaurant dine-in prices."
+    },
+    "crossCheckSource": {
+      "name": "Swiggy — Gallops Eateria & Restaurant, Mahuva",
+      "url": "https://www.swiggy.com/city/mahuva/gallops-eateria-and-restaurant-mahuva-rest933030",
+      "retrievedAt": "2026-10-14",
+      "notes": "Item list not publicly rendered (outlet outside delivery area). Confirms: Chinese + South Indian cuisines, '₹250 for two', 4.3/277 ratings, popular dishes Pav Bhaji, Mixed Veg Khichdi, Steamed Rice, Kadai Paneer."
+    },
+    "verificationStatus": "NEEDS_REVIEW",
+    "flags": [
+      "All prices are third-party online-delivery prices and must be confirmed against the in-house menu by the owner before publishing.",
+      "No item photographs were available from any public source. Food images in this build are PLACEHOLDER imagery, not photographs of Gallops Restaurant food.",
+      "Dietary classification (veg / vegan / Jain / spice level / allergens) was NOT published per item by the sources. Every item is imported with dietary flags UNSET and must be set by the owner.",
+      "Zomato lists no desserts or South Indian items in the online menu although the printed menu-card advertises South Indian and Desserts sections — these categories are likely served in-restaurant only and must be added by the owner.",
+      "Item names are reproduced exactly as published, including the source's own spellings (e.g. 'Margharita Pizza', 'Veg Schezwan Nodles', 'Tandoori Paneer Pizza')."
+    ],
+    "verifiedFacts": {
+      "name": "Gallops Restaurant & Eateria",
+      "parentBrand": "Gallops Food Plaza",
+      "tagline": "Good Food · Delicious Food, Great Ambience, Happy You",
+      "phone": "+91 84690 07078",
+      "brandPhone": "+91 98240 06262",
+      "email": "info@gallopsfoodplaza.in",
+      "website": "https://gallopsfoodplaza.in",
+      "instagram": "@gallops_food_plaza_",
+      "address": "Shree Siddh Ganesh Hospitality, Gandhi Bag Road, Near Dr. Bhutaksir Clinic, Mahuva Locality, Mahuva, Gujarat 364290",
+      "cuisines": ["North Indian", "Fast Food", "Beverages", "Burger", "Chinese", "Gujarati"],
+      "hoursRestaurantGuru": "6:00 AM – 11:30 PM daily",
+      "hoursZomato": "Opens 11:30 AM",
+      "priceRangePerPersonRestaurantGuru": "INR 200 - INR 400",
+      "googleRatingRestaurantGuru": "4.6 (729 votes)",
+      "zomatoRating": "4.3 (737 ratings)",
+      "swiggyRating": "4.3 (277 ratings)",
+      "fssai": "10724006000074"
+    }
+  },
+  "categories": [
+    {
+      "name": "Thali",
+      "sections": [
+        {
+          "name": "Fixed Thali",
+          "items": [
+            { "name": "Kathiyawadi Executive Thali", "price": 344, "serving": "1 Kathol + 2 veg + 4 chapati + chhas + papad + dal, bhat (lunch) or kadi, khichdi (dinner) + sweet" },
+            { "name": "Punjabi Executive Thali", "price": 377, "serving": "Paneer subzi + veg subzi + 2 tandoori roti + jeera rice + dal fry + butter milk + papad + sweet" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Soups & Salads",
+      "sections": [
+        {
+          "name": "Soup",
+          "items": [
+            { "name": "American Corn Pepper Soup", "price": 245, "serving": "225 ml" },
+            { "name": "Cheese Corn Tomato Soup", "price": 245, "serving": "225 ml" },
+            { "name": "Cream of Tomato Soup", "price": 187, "serving": "225 ml" },
+            { "name": "Hot & Sour Soup", "price": 216, "serving": "225 ml" },
+            { "name": "Lemon Coriander Soup", "price": 202, "serving": "225 ml" },
+            { "name": "Manchow Soup", "price": 216, "serving": "225 ml" },
+            { "name": "Sweet Corn Veg Soup", "price": 187, "serving": "225 ml" },
+            { "name": "Veg Cilantro Soup", "price": 245, "serving": "225 ml", "note": "Jain not available" },
+            { "name": "Veg Corn Chowder Soup", "price": 245, "serving": "225 ml" },
+            { "name": "Veg Dumpling Soup", "price": 245, "serving": "225 ml" }
+          ]
+        },
+        {
+          "name": "Salads",
+          "items": [
+            { "name": "Green Salad", "price": 144, "serving": "Approx 200 g" },
+            { "name": "Kachumber Salad", "price": 144, "serving": "Approx 200 g" },
+            { "name": "Tomato Salad", "price": 144, "serving": "Approx 200 g" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Starters",
+      "sections": [
+        {
+          "name": "Tandoor Starters",
+          "items": [
+            { "name": "Dahi ka Kabab", "price": 374, "serving": "250 g" },
+            { "name": "Gallops Special Tandoori Platter", "price": 546, "serving": "Paneer tikka 3 pcs + mushroom tikka 3 pcs + hara bhara kabab 3 pcs" },
+            { "name": "Hara Bhara Kabab", "price": 374, "serving": "250 g" },
+            { "name": "Mushroom Tikka", "price": 461, "serving": "250 g", "note": "Jain not available" },
+            { "name": "Paneer Taka Tak", "price": 546, "serving": "250 g" },
+            { "name": "Paneer Tikka Dry", "price": 461, "serving": "250 g" }
+          ]
+        },
+        {
+          "name": "Chinese Starters",
+          "items": [
+            { "name": "Chinese Bhel", "price": 390, "serving": "300 g" },
+            { "name": "Crispy Corn Thai Chilly", "price": 403, "serving": "300 g" },
+            { "name": "Crispy Vegetables", "price": 360, "serving": "300 g" },
+            { "name": "Paneer Chilly Dry", "price": 498, "serving": "300 g" },
+            { "name": "Paneer Chilly Gravy", "price": 498, "serving": "300 g" },
+            { "name": "Veg Manchurian Dry", "price": 360, "serving": "300 g" },
+            { "name": "Veg Manchurian Gravy", "price": 360, "serving": "300 g" },
+            { "name": "Veg Spring Roll", "price": 403, "serving": "300 g" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Main Course",
+      "sections": [
+        {
+          "name": "Punjabi Palette",
+          "items": [
+            { "name": "Chana Masala", "price": 390, "serving": "Approx 300 g" },
+            { "name": "Cheese Butter Masala", "price": 461, "serving": "Approx 300 g" },
+            { "name": "Cheese Kofta", "price": 461, "serving": "Approx 300 g" },
+            { "name": "Gallops Special Vegetable", "price": 475, "serving": "Approx 300 g" },
+            { "name": "Gobi Potato", "price": 390, "serving": "Approx 300 g" },
+            { "name": "Handi Dum Biryani", "price": 359, "serving": "300 g" },
+            { "name": "Handi Paneer", "price": 475, "serving": "Approx 300 g" },
+            { "name": "Jeera Potato", "price": 390, "serving": "Approx 300 g" },
+            { "name": "Kadai Paneer", "price": 475, "serving": "Approx 300 g" },
+            { "name": "Kaju Curry", "price": 490, "serving": "Approx 300 g" },
+            { "name": "Kaju Masala", "price": 490, "serving": "Approx 300 g" },
+            { "name": "Kaju Paneer Masala", "price": 492, "serving": "Approx 300 g" },
+            { "name": "Khoya Kaju", "price": 452, "serving": "Approx 300 g" },
+            { "name": "Malai Kofta", "price": 461, "serving": "Approx 300 g" },
+            { "name": "Matar Potato", "price": 390, "serving": "Approx 300 g" },
+            { "name": "Methi Potato", "price": 390, "serving": "Approx 300 g" },
+            { "name": "Mixed Vegetable", "price": 390, "serving": "Approx 300 g" },
+            { "name": "Mushroom Masala", "price": 452, "serving": "Approx 300 g" },
+            { "name": "Mutter Methi Malai", "price": 452, "serving": "Approx 300 g" },
+            { "name": "Nargisi Kofta", "price": 461, "serving": "Approx 300 g" },
+            { "name": "Navratan Korma", "price": 452, "serving": "Approx 300 g" },
+            { "name": "Palak Aloo", "price": 389, "serving": "Approx 300 g" },
+            { "name": "Palak Matar", "price": 389, "serving": "Approx 300 g" },
+            { "name": "Palak Paneer", "price": 475, "serving": "Approx 300 g" },
+            { "name": "Palak Plain", "price": 389, "serving": "Approx 300 g" },
+            { "name": "Paneer Angara", "price": 498, "serving": "Approx 300 g" },
+            { "name": "Paneer Bhurji", "price": 475, "serving": "Approx 300 g" },
+            { "name": "Paneer Butter Masala", "price": 475, "serving": "Approx 300 g" },
+            { "name": "Paneer Chatpatta", "price": 503, "serving": "300 g" },
+            { "name": "Paneer Kofta", "price": 461, "serving": "Approx 300 g" },
+            { "name": "Paneer Lababdar", "price": 475, "serving": "Approx 300 g" },
+            { "name": "Paneer Mushroom Masala", "price": 475, "serving": "Approx 300 g" },
+            { "name": "Paneer Pasanda", "price": 475, "serving": "Approx 300 g" },
+            { "name": "Paneer Tawa Masala", "price": 475, "serving": "Approx 300 g" },
+            { "name": "Paneer Tikka Masala", "price": 475, "serving": "Approx 300 g" },
+            { "name": "Paneer Toofani", "price": 498, "serving": "Approx 300 g" },
+            { "name": "Veg Tawa Masala", "price": 452, "serving": "Approx 300 g" },
+            { "name": "Veg Toofani", "price": 452, "serving": "Approx 300 g" },
+            { "name": "Vegetable Kofta", "price": 461, "serving": "Approx 300 g" },
+            { "name": "Vegetable Makhanwala", "price": 452, "serving": "Approx 300 g" }
+          ]
+        },
+        {
+          "name": "Lentil Love",
+          "items": [
+            { "name": "Dal Fry", "price": 288, "serving": "Approx 300 g" },
+            { "name": "Dal Makhani", "price": 430, "serving": "Approx 300 g" },
+            { "name": "Dal Tadka", "price": 317, "serving": "Approx 300 g" },
+            { "name": "Dhaba Dal", "price": 317, "serving": "Approx 300 g" }
+          ]
+        },
+        {
+          "name": "Bold Flavours of Kathiyawadi Cuisine",
+          "items": [
+            { "name": "Akhi Dungli", "price": 289, "serving": "Approx 300 g" },
+            { "name": "Aloo Rasawala", "price": 234, "serving": "Approx 300 g" },
+            { "name": "Bharela Dungli Bateta", "price": 289, "serving": "Approx 300 g" },
+            { "name": "Bharela Ringna", "price": 289, "serving": "Approx 300 g" },
+            { "name": "Bhat", "price": 156, "serving": "Approx 300 g" },
+            { "name": "Dahi Tikhari", "price": 234, "serving": "Approx 300 g" },
+            { "name": "Dal", "price": 156, "serving": "Approx 300 g" },
+            { "name": "Gallops Special Dhokli", "price": 289, "serving": "Approx 300 g", "note": "Jain not available" },
+            { "name": "Kaju Gathiya", "price": 360, "serving": "Approx 300 g" },
+            { "name": "Kathol", "price": 242, "serving": "Approx 300 g" },
+            { "name": "Seasonal Veg", "price": 234, "serving": "Approx 300 g" },
+            { "name": "Sev Tomato", "price": 234, "serving": "Approx 300 g" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Breads",
+      "sections": [
+        {
+          "name": "Tandoori Dough Delights",
+          "items": [
+            { "name": "Butter Kulcha", "price": 130 },
+            { "name": "Butter Naan", "price": 130 },
+            { "name": "Butter Paratha", "price": 130 },
+            { "name": "Cheese Kulcha", "price": 216 },
+            { "name": "Cheese Naan", "price": 216, "serving": "Per piece" },
+            { "name": "Garlic Kulcha", "price": 216 },
+            { "name": "Garlic Naan", "price": 216 },
+            { "name": "Lachhedar Paratha", "price": 101 },
+            { "name": "Methi Butter Paratha", "price": 102 },
+            { "name": "Methi Paratha", "price": 94 },
+            { "name": "Plain Kulcha", "price": 102 },
+            { "name": "Plain Naan", "price": 102 },
+            { "name": "Plain Paratha", "price": 102 },
+            { "name": "Roti Butter", "price": 55 },
+            { "name": "Roti Plain", "price": 47 },
+            { "name": "Stuffed Kulcha", "price": 173 },
+            { "name": "Stuffed Naan", "price": 173 }
+          ]
+        },
+        {
+          "name": "Kathiyawadi Staples",
+          "items": [
+            { "name": "Butter Rotla", "price": 101, "serving": "Per piece" },
+            { "name": "Garlic Butter Roti", "price": 115, "serving": "Per piece" },
+            { "name": "Garlic Rotla", "price": 101, "serving": "Per piece" },
+            { "name": "Methi Butter Roti", "price": 115, "serving": "Per piece" },
+            { "name": "Methi Rotla", "price": 101, "serving": "Per piece" },
+            { "name": "Plain Rotla", "price": 86, "serving": "Per piece" },
+            { "name": "Tawa Butter Paratha", "price": 101, "serving": "Per piece" },
+            { "name": "Tawa Butter Roti", "price": 40, "serving": "Per piece" },
+            { "name": "Tawa Lachha Paratha", "price": 101, "serving": "Per piece" },
+            { "name": "Tawa Roti", "price": 36, "serving": "Per piece" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Khichdi & Rice",
+      "sections": [
+        {
+          "name": "Special Khichdi",
+          "items": [
+            { "name": "Dal Khichdi with Curd", "price": 266, "serving": "300 g" },
+            { "name": "Kadi", "price": 173, "serving": "300 g" },
+            { "name": "Masala Khichdi with Curd", "price": 259, "serving": "300 g" },
+            { "name": "Mixed Veg Khichdi", "price": 259, "serving": "300 g" },
+            { "name": "Palak Corn Khichdi", "price": 259, "serving": "300 g" },
+            { "name": "Plain Khichdi", "price": 202, "serving": "300 g" },
+            { "name": "Vaghareli Khichdi", "price": 252, "serving": "300 g" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pizza, Pasta & Sizzlers",
+      "sections": [
+        {
+          "name": "Around the World",
+          "items": [
+            { "name": "Baked Macaroni with Pineapple", "price": 452, "serving": "Approx 300 g" },
+            { "name": "Baked Macaroni", "price": 452, "serving": "Approx 300 g" },
+            { "name": "Baked Vegetable with Pineapple", "price": 452, "serving": "Approx 300 g" },
+            { "name": "Baked Vegetable", "price": 452, "serving": "Approx 300 g" },
+            { "name": "Chinese Sizzler", "price": 510, "serving": "Approx 600 g" },
+            { "name": "Paneer Sizzler", "price": 552, "serving": "Approx 600 g" },
+            { "name": "Veg Sizzler", "price": 510, "serving": "Approx 600 g" }
+          ]
+        },
+        {
+          "name": "Pizza",
+          "items": [
+            { "name": "Double Cheesy Pizza", "price": 280, "serving": "250 g" },
+            { "name": "Green Farmhouse Pizza", "price": 264, "serving": "250 g" },
+            { "name": "Margharita Pizza", "price": 233, "serving": "8 inches" },
+            { "name": "Tandoori Paneer Pizza", "price": 311, "serving": "8 inches" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fried Rice & Noodles",
+      "sections": [
+        {
+          "name": "Rice & Noodles Magic",
+          "items": [
+            { "name": "Garlic Fried Rice", "price": 360, "serving": "Approx 300 g" },
+            { "name": "Jeera Rice", "price": 274, "serving": "Approx 300 g" },
+            { "name": "Schezwan Fried Rice", "price": 360, "serving": "Approx 300 g" },
+            { "name": "Steamed Rice", "price": 203, "serving": "Approx 300 g" },
+            { "name": "Triple Fried Rice", "price": 389, "serving": "Approx 300 g" },
+            { "name": "Veg Fried Rice", "price": 360, "serving": "Approx 300 g" },
+            { "name": "Veg Hyderabadi Biryani", "price": 331, "serving": "Approx 300 g" },
+            { "name": "Veg Manchurian Noodles", "price": 374, "serving": "Approx 300 g" },
+            { "name": "Veg Pulao", "price": 296, "serving": "Approx 300 g" },
+            { "name": "Veg Schezwan Noodles", "price": 360, "serving": "Approx 300 g" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Burgers & Sandwiches",
+      "sections": [
+        {
+          "name": "Burger",
+          "items": [
+            { "name": "Aloo Tikki Burger", "price": 155, "serving": "160 g" },
+            { "name": "Cheese Burst Burger", "price": 233, "serving": "200 g" },
+            { "name": "Spicy Paneer Burger", "price": 295, "serving": "200 g" }
+          ]
+        },
+        {
+          "name": "Sandwiches",
+          "items": [
+            { "name": "American Cheese Club Sandwich", "price": 264, "serving": "450 g" },
+            { "name": "Bombay Masala Sandwich", "price": 187, "serving": "255 g" },
+            { "name": "Classic Vegetables Sandwich", "price": 155, "serving": "255 g" },
+            { "name": "Eateria Special Sandwich", "price": 280 }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Snacks",
+      "sections": [
+        {
+          "name": "Quick Bites",
+          "items": [
+            { "name": "Cheese Garlic Bread", "price": 202, "serving": "120 g" },
+            { "name": "French Fries", "price": 202 },
+            { "name": "Peri Peri French Fries", "price": 233 },
+            { "name": "Samosa", "price": 92, "serving": "2 pcs · 156 g" },
+            { "name": "Single Pav", "price": 24 },
+            { "name": "Vada Pav", "price": 46 }
+          ]
+        },
+        {
+          "name": "Desi Delights",
+          "items": [
+            { "name": "Chole Kulcha", "price": 264, "serving": "360 g" },
+            { "name": "Classic Maggi", "price": 108, "serving": "280 g" },
+            { "name": "Desi Tadka Maggi", "price": 124, "serving": "300 g" },
+            { "name": "Eateria Special Maggi", "price": 179 }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Beverages",
+      "sections": [
+        {
+          "name": "Coolers & Lassi",
+          "items": [
+            { "name": "Butter Milk", "price": 72, "serving": "250 ml" },
+            { "name": "Fresh Lime Soda", "price": 115, "serving": "250 ml" },
+            { "name": "Fresh Lime Water", "price": 115, "serving": "250 ml" },
+            { "name": "Gallops Special Lassi", "price": 234, "serving": "250 ml" },
+            { "name": "Masala Butter Milk", "price": 86, "serving": "250 ml" },
+            { "name": "Salted Lassi", "price": 202, "serving": "250 ml" },
+            { "name": "Sweet Lassi", "price": 202, "serving": "250 ml" }
+          ]
+        },
+        {
+          "name": "Milkshakes",
+          "items": [
+            { "name": "Classic Chocolate Shake", "price": 239, "serving": "340 ml" },
+            { "name": "Cold Coffee", "price": 167, "serving": "340 ml" },
+            { "name": "Dry Fruit Milkshake", "price": 302, "serving": "340 ml" },
+            { "name": "Kaju Pista Milkshake", "price": 302, "serving": "250 ml" },
+            { "name": "Strawberry Milkshake", "price": 239, "serving": "340 ml" },
+            { "name": "Vanilla Shake", "price": 167, "serving": "340 ml" }
+          ]
+        }
+      ]
+    }
+  ]
+}

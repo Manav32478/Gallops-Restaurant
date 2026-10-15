@@ -1,0 +1,58 @@
+{
+  "name": "gallops-qr-ordering",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Gallops Restaurant — futuristic QR ordering & multi-tenant restaurant management SaaS",
+  "scripts": {
+    "dev": "tsx watch --clear-screen=false src/server.ts",
+    "build": "prisma generate && next build",
+    "start": "NODE_ENV=production tsx src/server.ts",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:deploy": "prisma migrate deploy",
+    "prisma:studio": "prisma studio",
+    "seed": "tsx prisma/seed.ts",
+    "import:menu": "tsx prisma/menu-import/import-menu.ts",
+    "db:reset": "prisma migrate reset --force",
+    "vapid": "tsx scripts/generate-vapid.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "python3 scripts/smoke-test.py"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.3.0",
+    "bcryptjs": "^2.4.3",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^12.4.0",
+    "jose": "^5.9.6",
+    "lucide-react": "^0.474.0",
+    "next": "^15.1.6",
+    "qrcode": "^1.5.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "socket.io": "^4.8.1",
+    "tailwind-merge": "^2.6.0",
+    "web-push": "^3.6.7",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.10.7",
+    "@types/qrcode": "^1.5.5",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "@types/web-push": "^3.6.4",
+    "autoprefixer": "^10.4.20",
+    "bcryptjs": "^2.4.3",
+    "cross-env": "^7.0.3",
+    "postcss": "^8.5.1",
+    "prisma": "^6.3.0",
+    "socket.io-client": "^4.8.4",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}
