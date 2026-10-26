@@ -1,6 +1,7 @@
 'use client';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { io, type Socket } from 'socket.io-client';
+import { SOCKET_ENABLED, SOCKET_URL, socketOptions } from '@/lib/socket-client';
 
 export type ConnectionState = 'connecting' | 'connected' | 'disconnected' | 'error' | 'unauthorized';
 
@@ -31,15 +32,17 @@ export function SocketProvider({
   const authKey = JSON.stringify(auth);
 
   useEffect(() => {
+    // Serverless deploys (Vercel) have no socket server — stay disconnected so the
+    // dashboards use their built-in polling instead of retrying a dead endpoint.
+    if (!SOCKET_ENABLED) {
+      setSocket(null);
+      setState('disconnected');
+      return;
+    }
+
     let alive = true;
-    const instance = io({
-      path: '/api/socket',
-      withCredentials: true,
-      transports: ['websocket', 'polling'],
-      reconnectionDelay: 800,
-      reconnectionDelayMax: 6000,
-      auth: JSON.parse(authKey) as Record<string, unknown>,
-    });
+    const options = socketOptions(JSON.parse(authKey) as Record<string, unknown>);
+    const instance = SOCKET_URL ? io(SOCKET_URL, options) : io(options);
 
     const update = (next: ConnectionState) => {
       if (alive) setState(next);

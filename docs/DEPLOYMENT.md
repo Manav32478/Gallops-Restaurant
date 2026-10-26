@@ -98,6 +98,61 @@ CMD ["node", "-r", "tsx/cjs", "src/server.ts"]
 
 Mount `/app/uploads` as a volume (or switch to Cloudinary/S3) and set `DATABASE_URL` at runtime.
 
+## 2.1 Deploying to Vercel (serverless)
+
+Vercel **cannot run `src/server.ts`**. That file is a custom Node server (Next.js plus
+Socket.IO in one process), and Next.js is explicit about it: *"A custom server cannot be
+deployed on Vercel."* Vercel serves the app from its own build output instead.
+
+The app is written to survive without the socket server, so this is a smaller loss than it
+sounds:
+
+- every broadcast goes through `getIO()?.`, so with no Socket.IO server the emits are
+  no-ops — placing, confirming and completing an order all still work;
+- reception and kitchen already poll every 15 s, analytics every 45 s;
+- the guest order tracker polls every 20 s whenever its socket is not connected.
+
+A Vercel deployment is therefore fully functional: updates land within 15–20 s instead of
+instantly. `/api/health` reports `realtime: "down"`, which is expected there.
+
+| Setting | Value |
+| --- | --- |
+| Framework Preset | Next.js |
+| Build Command | `npm run build` (runs `prisma generate && next build`) |
+| Install Command | `npm install` |
+| Root Directory | `./` if you push the repo root; `gallops` if you push the extracted folder |
+
+Environment variables (Vercel → Settings → Environment Variables). Set `DATABASE_URL` for
+Production, Preview **and** Development — some routes are rendered at build time:
+
+| Variable | Value |
+| --- | --- |
+| `DATABASE_URL` | Neon **pooled** connection (`-pooler` host) |
+| `DIRECT_URL` | Neon **direct** connection — only needed if you run migrations from Vercel |
+| `AUTH_SECRET` | `openssl rand -base64 32` |
+| `NEXT_PUBLIC_APP_URL` | `https://<your-app>.vercel.app` — this is baked into printed QR codes |
+| `NEXT_PUBLIC_SOCKET_ENABLED` | `false` |
+| `COOKIE_SECURE` | `true` (Vercel serves HTTPS) |
+| `UPLOAD_PROVIDER` | `cloudinary` — see the note below |
+
+Two Vercel limits worth planning around:
+
+- **The filesystem is read-only** outside `/tmp`. With `UPLOAD_PROVIDER=local`, dish photos
+  uploaded by the owner disappear on the next deploy. Set `UPLOAD_PROVIDER=cloudinary` and
+  add `CLOUDINARY_URL` before the owner starts uploading images.
+- **`npm run seed` never runs on Vercel.** Seed once from your machine against the same Neon
+  database: `npm run prisma:deploy && npm run seed`.
+
+### Getting instant updates back (optional)
+
+Keep Vercel for the web app and deploy the same repository a second time to a host that
+allows a long-lived process (Render, Railway, Fly.io, a VPS), started with `npm start`. Both
+services talk to the same Neon database, so there is no data split. Then:
+
+- on the realtime host: `SOCKET_CORS_ORIGIN="https://<your-app>.vercel.app"`
+- on Vercel: `NEXT_PUBLIC_SOCKET_ENABLED="true"` and
+  `NEXT_PUBLIC_SOCKET_URL="https://<your-realtime-host>"`
+
 ## 3. Database (Neon or any PostgreSQL)
 
 The app talks to PostgreSQL through Prisma and expects two variables:

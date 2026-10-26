@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { io } from 'socket.io-client';
+import { SOCKET_ENABLED, SOCKET_URL, socketOptions } from '@/lib/socket-client';
 import {
   BellRing,
   BellOff,
@@ -92,12 +93,12 @@ export function OrderTracker({
 
   // --- live updates over Socket.IO, with polling as a fallback -------------
   useEffect(() => {
-    const socket = io({
-      path: '/api/socket',
-      withCredentials: true,
-      transports: ['websocket', 'polling'],
-      auth: { orderToken: order.trackingToken },
-    });
+    // No socket server (serverless deploys): stay disconnected and let the
+    // 20-second polling fallback below drive status updates.
+    if (!SOCKET_ENABLED) return;
+
+    const options = socketOptions({ orderToken: order.trackingToken });
+    const socket = SOCKET_URL ? io(SOCKET_URL, options) : io(options);
     socket.on('connect', () => setConnected(true));
     socket.on('disconnect', () => setConnected(false));
     socket.on('order:updated', (payload: TrackedOrder) => {

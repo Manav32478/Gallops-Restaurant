@@ -37,9 +37,20 @@ async function main() {
     });
   });
 
+  // CORS is only needed in a split deployment: the web app on one origin (e.g.
+  // Vercel) connecting to this realtime service on another. Same-origin
+  // deployments never send an Origin header, so nothing is enabled by default.
+  const corsOrigins = (process.env.SOCKET_CORS_ORIGIN ?? '')
+    .split(',')
+    .map((origin) => origin.trim())
+    .filter(Boolean);
+
   const io = new SocketServer(httpServer, {
     path: '/api/socket',
     serveClient: false,
+    ...(corsOrigins.length > 0
+      ? { cors: { origin: corsOrigins, credentials: true } }
+      : {}),
     pingInterval: 25_000,
     pingTimeout: 20_000,
   });

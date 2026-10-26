@@ -2,7 +2,7 @@
   "name": "gallops-qr-ordering",
   "version": "1.0.0",
   "private": true,
-  "description": "Gallops Restaurant \u2014 futuristic QR ordering & multi-tenant restaurant management SaaS",
+  "description": "Gallops Restaurant — futuristic QR ordering & multi-tenant restaurant management SaaS",
   "scripts": {
     "dev": "tsx watch --clear-screen=false src/server.ts",
     "build": "prisma generate && next build",

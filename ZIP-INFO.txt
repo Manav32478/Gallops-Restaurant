@@ -4,6 +4,7 @@ Source bundle built 2026-10-26.
 WHAT IS IN HERE
 ---------------
 gallops/                Next.js 15 + TypeScript app (run everything from THIS folder)
+gallops/src/server.ts   custom Node server: Next.js + Socket.IO in one process
 gallops/prisma/         schema.prisma, migrations, seed.ts, menu import, load-env.ts
 gallops/docs/           SETUP, TESTING, DEPLOYMENT, MOBILE-APP, menu sourcing notes
 gallops/scripts/        smoke-test.py (65 checks), realtime-test.mjs (9 checks), demo.sh
@@ -50,15 +51,14 @@ Notes:
   ("We detected multiple lockfiles"). Delete the strays:
       rm -rf ../node_modules ../package-lock.json ../.neon ../neon.ts ../.env.local
 
-THEN
-----
+LOCAL RUN
+---------
   npm run prisma:deploy
   npm run seed
   npm run dev
 
 If `npm run seed` prints "Environment variable not found: DATABASE_URL", the
 standalone script could not see .env. Use the Prisma CLI wrapper instead:
-
   npm run db:seed
 
 Open http://localhost:3000
@@ -66,11 +66,38 @@ Logins (change before go-live): owner@gallopsfoodplaza.in / gallops123
                                 admin@gallops.app / platform123
                                 owner@spiceroute.in / spiceroute123
 
+DEPLOYING
+---------
+Read docs/DEPLOYMENT.md first. Two options:
+
+1. One host that runs a Node process (Render, Railway, Fly.io, VPS). Start command
+   `npm start`. Everything works, including instant Socket.IO updates. No code change.
+
+2. Vercel. Vercel cannot run src/server.ts (Next.js: "A custom server cannot be
+   deployed on Vercel"), so the app runs without its Socket.IO server. It still
+   works — reception and kitchen poll every 15 s, guest order tracking every 20 s.
+   Set on Vercel:
+       DATABASE_URL                 Neon pooled connection
+       AUTH_SECRET                  openssl rand -base64 32
+       NEXT_PUBLIC_APP_URL          https://<your-app>.vercel.app
+       NEXT_PUBLIC_SOCKET_ENABLED   false
+       COOKIE_SECURE                true
+       UPLOAD_PROVIDER              cloudinary   (Vercel's disk is read-only)
+   Seed from your own machine against the same Neon database before the first
+   deploy — `npm run seed` never runs on Vercel.
+   For instant updates later, deploy the same repo a second time to Render/Railway
+   with `npm start`, then set NEXT_PUBLIC_SOCKET_ENABLED=true and
+   NEXT_PUBLIC_SOCKET_URL=https://<that host> on Vercel, and
+   SOCKET_CORS_ORIGIN=https://<your-app>.vercel.app on the realtime host.
+
 PROOF IT WORKS
 --------------
   npm run build
   npm test
   node scripts/realtime-test.mjs
+
+Last verified in the reference environment: build exit 0, tsc clean,
+npm test 65 passed / 0 failed, realtime-test 9 passed / 0 failed.
 
 PRICING (annual, excludes GST)
 ------------------------------
