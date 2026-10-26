@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 import { ToastProvider } from '@/components/providers/ToastProvider';
+import { PwaInstaller } from '@/components/pwa/PwaInstaller';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,6 +24,15 @@ export const metadata: Metadata = {
   description:
     'Scan, browse and order from your table at Gallops Restaurant, Mahuva. Real-time reception dashboard, kitchen display and ready-for-pickup notifications.',
   applicationName: 'Gallops',
+  manifest: '/manifest.webmanifest',
+  appleWebApp: { capable: true, title: 'Gallops', statusBarStyle: 'black-translucent' },
+  icons: {
+    icon: [
+      { url: '/icons/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/icons/favicon-64.png', sizes: '64x64', type: 'image/png' },
+    ],
+    apple: [{ url: '/icons/apple-touch-icon.png', sizes: '180x180' }],
+  },
   openGraph: {
     title: 'Gallops — Your Table. Your Menu. A Smarter Dining Experience.',
     description:
@@ -43,6 +53,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="min-h-screen bg-ink-950 text-ivory-100 antialiased">
         <ToastProvider>{children}</ToastProvider>
+        <PwaInstaller />
       </body>
     </html>
   );

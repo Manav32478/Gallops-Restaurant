@@ -1,0 +1,35 @@
+{
+  "name": "Gallops — Order from your table",
+  "short_name": "Gallops",
+  "description": "Scan, browse and order from your table at Gallops Restaurant, Mahuva. Live order tracking until your food is ready.",
+  "id": "/",
+  "start_url": "/r/gallops/menu",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "portrait",
+  "background_color": "#07070A",
+  "theme_color": "#07070A",
+  "lang": "en-IN",
+  "dir": "ltr",
+  "categories": ["food", "shopping", "productivity"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Gallops menu",
+      "short_name": "Menu",
+      "url": "/r/gallops/menu",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Staff sign in",
+      "short_name": "Staff",
+      "url": "/login",
+      "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

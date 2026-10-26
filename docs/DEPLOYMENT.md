@@ -98,7 +98,48 @@ CMD ["node", "-r", "tsx/cjs", "src/server.ts"]
 
 Mount `/app/uploads` as a volume (or switch to Cloudinary/S3) and set `DATABASE_URL` at runtime.
 
-## 3. Environment variables
+## 3. Database (Neon or any PostgreSQL)
+
+The app talks to PostgreSQL through Prisma and expects two variables:
+
+| Variable | What it is | Example |
+| --- | --- | --- |
+| `DATABASE_URL` | **Pooled** connection used by the running app | `postgresql://user:pass@ep-xxx-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require` |
+| `DIRECT_URL` | **Direct** connection used by `prisma migrate` | `postgresql://user:pass@ep-xxx.ap-southeast-1.aws.neon.tech/neondb?sslmode=require` |
+
+Neon's CLI calls the second one `DATABASE_URL_UNPOOLED`. After `neon env pull`, copy it
+into the name the schema looks for:
+
+```bash
+grep -v '^DIRECT_URL=' .env > .env.tmp && mv .env.tmp .env
+grep '^DATABASE_URL_UNPOOLED=' .env | sed 's/^DATABASE_URL_UNPOOLED=/DIRECT_URL=/' >> .env
+```
+
+Older Neon guides also add `&pgbouncer=true` to the pooled URL. Neon no longer requires
+it, and it disables prepared statements, so leave it off unless you see
+"prepared statement already exists" errors.
+
+Why two: this is a **long-running Node server** (Next.js + Socket.IO in one process),
+so it keeps a small, persistent connection pool — the pooled endpoint is the right
+choice at runtime, while schema migrations need a session that PgBouncer's transaction
+mode cannot provide.
+
+Recommended driver choice for this architecture: **Prisma's default `postgresql`
+provider over the pooled endpoint.** The Neon *serverless* HTTP driver
+(`@neondatabase/neon`) is designed for per-request serverless/edge functions; on a
+persistent server it adds a hop and complicates interactive transactions, so the app
+deliberately does not use it. If you later move a route to the Edge runtime, add
+`@prisma/adapter-neon` for that route only.
+
+Neon specifics that matter here:
+- Keep `connection_limit` modest (the pooler's limit depends on your compute size);
+  a single app instance is fine with the default.
+- Enable **connection pooling** in the Neon console and use the `-pooler` host.
+- Neon scales to zero when idle — the first request after an idle period can take a
+  second or two. Raise the minimum compute size if the demo must feel instant.
+- Use `neon branches` for a staging copy of the data; `main`/`production` for live.
+
+## 4. Environment variables
 
 | Variable | Required | Default | Notes |
 | --- | --- | --- | --- |
@@ -121,7 +162,7 @@ Mount `/app/uploads` as a volume (or switch to Cloudinary/S3) and set `DATABASE_
 
 **Never commit `.env`.** `.env.example` documents every key with empty values.
 
-## 4. Enabling the optional integrations
+## 5. Enabling the optional integrations
 
 **Razorpay (online payments)**
 1. `RAZORPAY_ENABLED=true`, set key id + secret; set `RAZORPAY_WEBHOOK_SECRET` to the secret
@@ -144,7 +185,7 @@ is independent; unconfigured channels degrade to `SKIPPED` rows in `Notification
 (the `src/lib/upload.ts` interface is the single seam), otherwise uploads land on one
 instance's disk and 404 on the others.
 
-## 5. Before go-live checklist
+## 6. Before go-live checklist
 
 - [ ] `AUTH_SECRET` rotated; every demo password changed; `/dashboard/staff` reviewed
 - [ ] `NEXT_PUBLIC_APP_URL` set to the public HTTPS origin
@@ -157,7 +198,7 @@ instance's disk and 404 on the others.
 - [ ] 320px pass on a real low-end Android phone over mobile data
 - [ ] Backups restorable: `pg_restore` into a scratch DB and boot against it
 
-## 6. Operations
+## 7. Operations
 
 **Backups**
 ```bash

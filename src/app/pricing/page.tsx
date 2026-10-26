@@ -45,7 +45,7 @@ export default async function PricingPage() {
         <PageHero
           eyebrow="Pricing"
           title={<>Priced in rupees. Billed per restaurant.</>}
-          description="Every plan includes the guest ordering experience, the reception board, menu control and analytics. Higher tiers raise limits and unlock the kitchen display, coupons, online payments and API access."
+          description="Every plan is billed once a year in rupees and includes the guest ordering experience, the reception board, menu control and analytics. Higher tiers raise limits and unlock the kitchen display, coupons, online payments and API access."
         />
 
         <Section className="pt-12">
@@ -74,9 +74,11 @@ export default async function PricingPage() {
 
                       <p className="mt-6 flex items-baseline gap-1.5">
                         <span className="font-display text-4xl text-lime-400">{formatMoney(plan.priceMinor)}</span>
-                        <span className="text-sm text-ivory-500">/ month</span>
+                        <span className="text-sm text-ivory-500">/ year</span>
                       </p>
-                      <p className="mt-1 text-[11px] text-ivory-500">Excluding GST · billed in INR</p>
+                      <p className="mt-1 text-[11px] text-ivory-500">
+                        ≈ {formatMoney(Math.round(plan.priceMinor / 12))} / month · excluding GST · billed yearly in INR
+                      </p>
 
                       <div className="mt-6 grid grid-cols-3 gap-2 text-center">
                         {[
@@ -187,7 +189,7 @@ export default async function PricingPage() {
           <SectionHeading
             eyebrow="Questions"
             title="Pricing, plainly"
-            description="No setup fee is charged in development mode; GST is added at invoice time once billing is live."
+            description="One yearly invoice per restaurant, in rupees. GST is added at invoice time once billing is live."
             align="center"
           />
           <div className="mt-8 flex justify-center">

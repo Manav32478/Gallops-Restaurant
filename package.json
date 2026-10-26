@@ -2,7 +2,7 @@
   "name": "gallops-qr-ordering",
   "version": "1.0.0",
   "private": true,
-  "description": "Gallops Restaurant — futuristic QR ordering & multi-tenant restaurant management SaaS",
+  "description": "Gallops Restaurant \u2014 futuristic QR ordering & multi-tenant restaurant management SaaS",
   "scripts": {
     "dev": "tsx watch --clear-screen=false src/server.ts",
     "build": "prisma generate && next build",
@@ -12,6 +12,7 @@
     "prisma:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio",
     "seed": "tsx prisma/seed.ts",
+    "db:seed": "prisma db seed",
     "import:menu": "tsx prisma/menu-import/import-menu.ts",
     "db:reset": "prisma migrate reset --force",
     "vapid": "tsx scripts/generate-vapid.ts",
@@ -22,6 +23,8 @@
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@neon/config": "^1.9.4",
+    "@neon/env": "^1.6.5",
     "@prisma/client": "^6.3.0",
     "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",

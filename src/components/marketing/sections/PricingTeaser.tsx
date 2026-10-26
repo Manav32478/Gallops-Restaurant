@@ -52,9 +52,11 @@ export function PricingTeaser({ plans, billingMode }: { plans: PlanCard[]; billi
 
                 <p className="mt-6 flex items-baseline gap-1">
                   <span className="font-display text-4xl text-lime-400">{formatMoney(plan.priceMinor)}</span>
-                  <span className="text-sm text-ivory-500">/ month</span>
+                  <span className="text-sm text-ivory-500">/ year</span>
                 </p>
-                <p className="mt-1 text-[11px] text-ivory-500">Excluding GST · billed in INR</p>
+                <p className="mt-1 text-[11px] text-ivory-500">
+                  ≈ {formatMoney(Math.round(plan.priceMinor / 12))} / month · excl. GST
+                </p>
 
                 <ul className="mt-6 space-y-2.5 text-sm text-ivory-300">
                   <li className="flex gap-2.5">

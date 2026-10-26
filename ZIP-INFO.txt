@@ -1,0 +1,77 @@
+Gallops — QR ordering & multi-tenant restaurant SaaS
+Source bundle built 2026-10-26.
+
+WHAT IS IN HERE
+---------------
+gallops/                Next.js 15 + TypeScript app (run everything from THIS folder)
+gallops/prisma/         schema.prisma, migrations, seed.ts, menu import, load-env.ts
+gallops/docs/           SETUP, TESTING, DEPLOYMENT, MOBILE-APP, menu sourcing notes
+gallops/scripts/        smoke-test.py (65 checks), realtime-test.mjs (9 checks), demo.sh
+gallops/neon.ts         Neon policy (Postgres only, auth disabled)
+gallops/.neon           Neon link: org org-super-leaf-73078211 / project rapid-star-96598056 / branch production
+
+NOT included (on purpose): .env, node_modules, .next, .git
+.env is secret — copy .env.example to .env and fill it in.
+
+FIRST RUN (macOS / Linux)
+-------------------------
+Run every command on its own line. Never put a "#" comment on the same line as a
+command: the neon CLI reads trailing words as arguments and fails with
+"ERROR: Unknown commands: #, ...".
+
+The zip extracts to a folder named "gallops" INSIDE whatever folder the extractor
+creates. If `ls package.json` fails, you are one level too high — cd into "gallops".
+
+  cd path/to/gallops
+  ls package.json prisma/schema.prisma
+  npm i
+  test -f .env || cp .env.example .env
+
+NEON (hosted PostgreSQL, no local Postgres needed)
+--------------------------------------------------
+  npm i -g neon@latest
+  neon login
+  neon init -y --no-agent-setup --org-id org-super-leaf-73078211 --project-id rapid-star-96598056 --branch production --services postgres
+  neon deploy
+  neon env pull --file .env
+
+env pull writes DATABASE_URL (pooled, host ends in -pooler) and
+DATABASE_URL_UNPOOLED (direct). The schema needs the direct one as DIRECT_URL:
+
+  grep -v '^DIRECT_URL=' .env > .env.tmp && mv .env.tmp .env
+  grep '^DATABASE_URL_UNPOOLED=' .env | sed 's/^DATABASE_URL_UNPOOLED=/DIRECT_URL=/' >> .env
+
+Notes:
+- --no-agent-setup is required on Node 20 (the agent-skills step wants Node 22.20+).
+  Nothing else in the CLI needs Node 22, so you do not have to upgrade.
+- `neon init` installs @neon/config + @neon/env into the folder you run it in. If you
+  run it in the parent folder by mistake it leaves a stray node_modules and
+  package-lock.json there, and Next.js then picks the parent as the workspace root
+  ("We detected multiple lockfiles"). Delete the strays:
+      rm -rf ../node_modules ../package-lock.json ../.neon ../neon.ts ../.env.local
+
+THEN
+----
+  npm run prisma:deploy
+  npm run seed
+  npm run dev
+
+If `npm run seed` prints "Environment variable not found: DATABASE_URL", the
+standalone script could not see .env. Use the Prisma CLI wrapper instead:
+
+  npm run db:seed
+
+Open http://localhost:3000
+Logins (change before go-live): owner@gallopsfoodplaza.in / gallops123
+                                admin@gallops.app / platform123
+                                owner@spiceroute.in / spiceroute123
+
+PROOF IT WORKS
+--------------
+  npm run build
+  npm test
+  node scripts/realtime-test.mjs
+
+PRICING (annual, excludes GST)
+------------------------------
+Starter Rs 19,999 / year   Growth Rs 40,000 / year   Pro Rs 79,999 / year

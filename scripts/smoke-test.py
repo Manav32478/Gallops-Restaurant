@@ -102,24 +102,13 @@ def main() -> int:
 
     # ------------------------------------------------- table + order flow
     print("\nTable QR and ordering")
-    import subprocess
-
-    token = (
-        subprocess.check_output(
-            [
-                "psql",
-                "-h",
-                "/tmp",
-                "-U",
-                "postgres",
-                "-d",
-                "gallops",
-                "-tAc",
-                "select \"qrToken\" from \"RestaurantTable\" r join \"Restaurant\" s on s.id=r.\"restaurantId\" where s.slug='gallops' and r.code='T03'",
-            ]
-        )
-        .decode()
-        .strip()
+    # Read a real table token from the API (works on any host — no psql required).
+    status, _, tables_body = owner.request("GET", "/api/dashboard/gallops/tables")
+    api_tables = (tables_body.get("data") or {}).get("tables", [])
+    check("3a. tables API returns QR tokens", status == 200 and len(api_tables) > 0)
+    token = next(
+        (t["qrToken"] for t in api_tables if t.get("code") == "T03"),
+        api_tables[0]["qrToken"],
     )
     status, _, body = guest.request("GET", f"/api/menu/gallops?table={token}")
     check("3. valid table token resolves", (body.get("data") or {}).get("table", {}).get("code") == "T03")

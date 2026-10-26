@@ -24,8 +24,16 @@ Everything is INR (₹). Money is stored in **paise** as integers and priced **s
 | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) | Production deployment, env matrix, Razorpay / web-push / email setup, backups |
 | [docs/MENU-DATA.md](docs/MENU-DATA.md) | Where every menu item came from, and what the owner must verify |
 | [docs/WEBSITE.md](docs/WEBSITE.md) | Section-by-section guide to the marketing website, its motion system and design tokens |
+| [docs/MOBILE-APP.md](docs/MOBILE-APP.md) | Install it on a phone (PWA) and the recipe for building a real Android APK |
 
 ---
+
+## Mobile app
+
+The product is a **PWA** — installable on Android and iPhone straight from the browser
+(home-screen icon, full screen, offline menu + tracking screen). See
+[docs/MOBILE-APP.md](docs/MOBILE-APP.md) for installing it on a phone and for the
+exact Bubblewrap recipe that turns it into a real Play-store APK.
 
 ## Quick start
 
@@ -38,6 +46,9 @@ npm install
 npx prisma migrate deploy     # or: npx prisma migrate dev
 npm run seed                  # tenant, users, tables, plans + imports the real menu
 npm run dev                   # http://localhost:3000
+
+# or, for a clean demo in one command:
+./scripts/demo.sh             # reset DB → seed → start
 ```
 
 Demo accounts (passwords are in the seed and printed by `npm run seed`):
@@ -144,6 +155,7 @@ bcryptjs · web-push (optional)
 | Script | Does |
 | --- | --- |
 | `npm run dev` | Custom server (Next + Socket.IO) in watch mode |
+| `./scripts/demo.sh` | One-command demo: reset DB, seed, start |
 | `npm run build` | `prisma generate` + production build |
 | `npm start` | Production server (Next + Socket.IO, port 3000) |
 | `npm run seed` | Seed tenant, users, tables, plans **and import the real menu** |
@@ -187,5 +199,3 @@ docs/            architecture, setup, testing, deployment, menu provenance
 
 Licensed for Gallops Restaurant. Menu content belongs to the restaurant; third-party
 price data is reproduced for internal use and must be verified before publication.
-
-# Gallops-Restaurant

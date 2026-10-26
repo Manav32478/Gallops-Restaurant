@@ -37,3 +37,4 @@ __snapshots__/
 # prisma
 prisma/*.db
 prisma/*.db-journal
+.neon

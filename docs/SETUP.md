@@ -8,7 +8,7 @@
 | PostgreSQL | 14+ (tested on 17) | must be running and reachable |
 | npm | 10+ | ships with Node |
 | Python | 3.9+ | only to run the acceptance suite (`scripts/smoke-test.py`) |
-| `psql` | any | only the test scripts shell out to it for a QR token; the app itself does not need it |
+| `psql` | not required | the test scripts read table tokens from the app's own API, so nothing needs `psql` |
 
 Optional: `openssl` (generate `AUTH_SECRET`), `git`.
 
@@ -21,6 +21,62 @@ createdb gallops                 # or: psql -c 'create database gallops'
 
 Any host works (local, Docker, Neon, Supabase, RDS). For managed Postgres use the pooled
 connection string for `DATABASE_URL` and add `?sslmode=require` if the provider requires TLS.
+
+### Option B — Neon (hosted PostgreSQL, no local install)
+
+If you would rather not install PostgreSQL at all:
+
+1. Create a free project at **https://neon.tech**.
+2. From the project dashboard copy **both** connection strings (Connection details →
+   *Pooled connection* and *Direct connection*).
+3. Put them in `.env`:
+   ```env
+   DATABASE_URL="postgresql://user:pass@ep-xxx-pooler.region.aws.neon.tech/neondb?sslmode=require"
+   DIRECT_URL="postgresql://user:pass@ep-xxx.region.aws.neon.tech/neondb?sslmode=require"
+   ```
+   `DATABASE_URL` (pooled, host ends in `-pooler`) is what the app uses at runtime;
+   `DIRECT_URL` (unpooled) is what `prisma migrate` needs, because DDL cannot run
+   through PgBouncer in transaction mode. With a local PostgreSQL just set both to
+   the same URL.
+4. Skip `createdb` and go straight to `npm run prisma:deploy && npm run seed`.
+
+Or let the Neon CLI write the URLs for you. Run it **on your own machine** (it
+authenticates through a browser callback on `127.0.0.1`) and **from the folder that
+contains `package.json`** — if you extracted the zip, that is the inner `gallops/`
+folder, not the folder the extractor created:
+
+```bash
+cd path/to/gallops
+pwd
+ls package.json prisma/schema.prisma
+```
+
+If `ls` prints both files you are in the right place. Then, one command per line
+(no trailing comments — the CLI reads them as arguments):
+
+```bash
+npm i -g neon@latest
+neon login
+neon init -y --no-agent-setup --org-id <org> --project-id <project> --branch production --services postgres
+test -f .env || cp .env.example .env
+neon env pull --file .env
+```
+
+`env pull` writes `DATABASE_URL` (pooled) and `DATABASE_URL_UNPOOLED` (direct). The
+schema expects the direct one as `DIRECT_URL`, so copy it across:
+
+```bash
+grep -v '^DIRECT_URL=' .env > .env.tmp && mv .env.tmp .env
+grep '^DATABASE_URL_UNPOOLED=' .env | sed 's/^DATABASE_URL_UNPOOLED=/DIRECT_URL=/' >> .env
+```
+
+Then continue at step 4 of this document.
+
+Two notes on the CLI:
+- `--no-agent-setup` is required on Node 20. The agent-skills step wants Node 22.20+;
+  everything else in the CLI works fine on Node 20, so there is no need to upgrade.
+- `neon deploy` is idempotent — re-running it against a project that already has
+  Postgres prints "No changes" and pulls the same variables.
 
 ## 3. Environment
 
@@ -54,7 +110,7 @@ See [DEPLOYMENT.md](DEPLOYMENT.md) for the full matrix.
 ```bash
 npm install
 npx prisma generate
-npx prisma migrate deploy      # applies prisma/migrations
+npm run prisma:deploy          # applies prisma/migrations
 npm run seed                   # tenant + users + tables + plans + REAL MENU (170 items)
 npm run dev                    # http://localhost:3000
 ```
@@ -71,11 +127,35 @@ npm run dev                    # http://localhost:3000
 
 | Command | When |
 | --- | --- |
+| `npm run db:seed` | fallback for `npm run seed` — runs the seed through the Prisma CLI, which loads `.env` itself |
 | `npx prisma migrate dev` | you changed `schema.prisma` — creates a migration |
 | `npm run db:reset` | destructive: drop, re-migrate, re-seed |
 | `npm run import:menu` | re-import the menu JSON after editing it (safe, idempotent) |
 | `npx prisma studio` | browse/edit data in a GUI |
 | `npm run vapid` | generate VAPID keys for web push |
+
+### `error: Environment variable not found: DATABASE_URL`
+
+That message comes from `npm run seed` (or `npm run import:menu`) when the standalone
+script cannot see `.env` — the app itself is unaffected, because `src/server.ts` loads
+`.env` through Next. Two ways through it:
+
+```bash
+npm run db:seed
+```
+
+runs the same seed via the Prisma CLI, which loads `.env` itself and hands the
+variables to the script. Or check that `.env` really contains `DATABASE_URL`:
+
+```bash
+grep -n '^DATABASE_URL' .env | sed 's#//[^@]*@#//***@#'
+```
+
+If it is missing entirely, re-pull it from Neon:
+
+```bash
+neon env pull --file .env -e DATABASE_URL -e DATABASE_URL_UNPOOLED
+```
 
 ## 5. Try the real workflow (5 minutes)
 

@@ -16,6 +16,9 @@
  * (never duplicated) on every seed run. Delete them with:
  *   delete from "Order" where "guestName" = 'Demo Guest';
  */
+// Must be the first import: loads .env before the PrismaClient is constructed.
+import './load-env';
+
 import { prisma } from '../src/lib/prisma';
 import { hashPassword } from '../src/lib/auth/password';
 import { randomToken } from '../src/lib/ids';
@@ -88,34 +91,57 @@ async function main() {
   console.log('Seeding Gallops platform…');
 
   // ---------------------------------------------------------------- plans
+  // Pricing is ANNUAL (billed once a year, in INR, excluding GST).
   await upsertPlan('STARTER', {
     name: 'Starter',
-    description: 'For a single outlet getting started with QR ordering.',
-    priceMinor: 99900,
-    maxTables: 12,
-    maxStaff: 4,
-    maxOrdersPerMonth: 600,
-    features: ['QR table ordering', 'Reception dashboard', 'Menu management', 'Web push notifications', 'Cash / counter payments'],
+    description: 'One outlet taking its first orders by QR — billed yearly.',
+    priceMinor: 1999900, // ₹19,999 / year
+    maxTables: 25,
+    maxStaff: 8,
+    maxOrdersPerMonth: 5000,
+    features: [
+      'QR table ordering + printable QR sheet',
+      'Reception dashboard (realtime)',
+      'Menu, categories & sold-out control',
+      'Basic analytics',
+      'Cash / counter payments',
+      'Email support',
+    ],
     sortOrder: 1,
   });
   await upsertPlan('GROWTH', {
     name: 'Growth',
-    description: 'For busy restaurants that need the kitchen display and analytics.',
-    priceMinor: 249900,
+    description: 'The plan most restaurants pick — ₹40,000 a year, everything on the floor.',
+    priceMinor: 4000000, // ₹40,000 / year
     maxTables: 60,
-    maxStaff: 15,
-    maxOrdersPerMonth: 6000,
-    features: ['Everything in Starter', 'Kitchen display system', 'Advanced analytics', 'Coupons & promotions', 'WhatsApp / SMS ready', 'Multi-language menu'],
+    maxStaff: 20,
+    maxOrdersPerMonth: 20000,
+    features: [
+      'Everything in Starter',
+      'Kitchen display system',
+      'Advanced analytics & best sellers',
+      'Coupons & promotions',
+      'WhatsApp / SMS ready',
+      'Multi-language menu',
+      'Priority support',
+    ],
     sortOrder: 2,
   });
   await upsertPlan('PRO', {
     name: 'Pro',
-    description: 'Multi-outlet groups and high-volume restaurants.',
-    priceMinor: 599900,
+    description: 'Multi-outlet groups and high-volume restaurants — billed yearly.',
+    priceMinor: 7999900, // ₹79,999 / year
     maxTables: 500,
     maxStaff: 100,
     maxOrdersPerMonth: 100000,
-    features: ['Everything in Growth', 'Unlimited tables', 'Online payments (Razorpay)', 'Priority support', 'API access', 'Custom branding'],
+    features: [
+      'Everything in Growth',
+      'Online payments (Razorpay)',
+      'API access & webhooks',
+      'Custom branding & domain',
+      'Multi-outlet management',
+      'Dedicated onboarding & account manager',
+    ],
     sortOrder: 3,
   });
   const starter = await prisma.plan.findUniqueOrThrow({ where: { code: 'STARTER' } });
@@ -306,6 +332,7 @@ async function main() {
 
   // ------------------------------------------------------------------- out
   const tables = await prisma.restaurantTable.findMany({ where: { restaurantId: gallops.id }, orderBy: { code: 'asc' } });
+  console.log('\n  Plans (billed yearly, excl. GST): Starter ₹19,999 · Growth ₹40,000 · Pro ₹79,999')
   console.log('\n  Gallops Restaurant seeded.');
   console.log('  Sign in at /login with:');
   console.log('    owner@gallopsfoodplaza.in   / gallops123      (Owner)');

@@ -114,7 +114,7 @@ async function main() {
   // Wait for the server-side room subscription to settle.
   await wait(500);
 
-  const menuResponse = await json('GET', '/api/menu/gallops?table=' + (await tableToken()));
+  const menuResponse = await json('GET', '/api/menu/gallops?table=' + (await tableToken(owner.cookie)));
   check('3. menu loads for the guest', menuResponse.status === 200);
   const categories = menuResponse.body.data.categories;
   const item =
@@ -124,7 +124,7 @@ async function main() {
 
   const placed = await json('POST', '/api/orders', {
     slug: 'gallops',
-    table: await tableToken(),
+    table: await tableToken(owner.cookie),
     idempotencyKey: `rt-${Date.now()}`,
     paymentMethod: 'CASH_AT_COUNTER',
     guestName: 'Realtime Test',
@@ -197,14 +197,13 @@ async function main() {
 }
 
 let cachedToken;
-async function tableToken() {
+/** Reads a real table token from the dashboard API (no psql dependency). */
+async function tableToken(cookie) {
   if (!cachedToken) {
-    const { execSync } = await import('child_process');
-    cachedToken = execSync(
-      `psql -h /tmp -U postgres -d gallops -tAc "select \\"qrToken\\" from \\"RestaurantTable\\" r join \\"Restaurant\\" s on s.id=r.\\"restaurantId\\" where s.slug='gallops' and r.code='T01'"`,
-    )
-      .toString()
-      .trim();
+    const { status, body } = await json('GET', '/api/dashboard/gallops/tables', undefined, cookie);
+    const tables = body?.data?.tables ?? [];
+    if (status !== 200 || !tables.length) throw new Error('could not read table tokens from the API');
+    cachedToken = (tables.find((table) => table.code === 'T01') ?? tables[0]).qrToken;
   }
   return cachedToken;
 }

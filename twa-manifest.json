@@ -1,0 +1,44 @@
+{
+  "packageId": "com.gallops.app",
+  "host": "menu.gallopsfoodplaza.in",
+  "name": "Gallops",
+  "launcherName": "Gallops",
+  "display": "standalone",
+  "orientation": "portrait",
+  "themeColor": "07070A",
+  "themeColorDark": "07070A",
+  "navigationColor": "07070A",
+  "navigationColorDark": "07070A",
+  "navigationDividerColor": "07070A",
+  "navigationDividerColorDark": "07070A",
+  "backgroundColor": "07070A",
+  "enableNotifications": true,
+  "startUrl": "/r/gallops/menu",
+  "iconUrl": "https://menu.gallopsfoodplaza.in/icons/icon-512.png",
+  "maskableIconUrl": "https://menu.gallopsfoodplaza.in/icons/icon-maskable-512.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "./android.keystore",
+    "alias": "gallops"
+  },
+  "appVersionName": "1.0.0",
+  "appVersionCode": 1,
+  "shortcuts": [
+    {
+      "name": "Gallops menu",
+      "short_name": "Menu",
+      "url": "/r/gallops/menu",
+      "chosenIconUrl": "https://menu.gallopsfoodplaza.in/icons/icon-192.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://menu.gallopsfoodplaza.in/manifest.webmanifest",
+  "features": {},
+  "alphaDependencies": { "enabled": false },
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://menu.gallopsfoodplaza.in/",
+  "minSdkVersion": 21,
+  "orientationLock": false
+}

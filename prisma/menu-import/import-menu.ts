@@ -13,6 +13,9 @@
  *  - re-running is safe (idempotent upsert) and never overwrites a value the
  *    owner has already verified (OWNER_VERIFIED / OWNER_EDITED rows are skipped).
  */
+// Must be the first import: loads .env before the PrismaClient is constructed.
+import '../load-env';
+
 import { readFile } from 'fs/promises';
 import path from 'path';
 import { Prisma } from '@prisma/client';

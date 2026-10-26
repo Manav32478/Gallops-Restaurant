@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { prisma } from '@/lib/prisma';
 import { CartProvider } from '@/components/menu/CartProvider';
+import { InstallAppButton } from '@/components/pwa/PwaInstaller';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,7 +33,13 @@ export default async function RestaurantLayout({
 
   return (
     <CartProvider slug={restaurant.slug} currency={restaurant.currency}>
-      <div className="min-h-screen bg-ink-950">{children}</div>
+      <div className="min-h-screen bg-ink-950">
+        {children}
+        {/* PWA install affordance — only renders where the browser supports it. */}
+        <div className="mx-auto max-w-md px-4 pb-28 pt-2 text-center">
+          <InstallAppButton />
+        </div>
+      </div>
     </CartProvider>
   );
 }

@@ -338,7 +338,7 @@ export function RestaurantsAdmin() {
               <Select id={id} value={form.planCode} onChange={(e) => setForm({ ...form, planCode: e.target.value })}>
                 {data.plans.map((plan) => (
                   <option key={plan.code} value={plan.code}>
-                    {plan.name} · {formatMoney(plan.priceMinor)}/mo
+                    {plan.name} · {formatMoney(plan.priceMinor)}/yr
                   </option>
                 ))}
               </Select>
@@ -362,7 +362,7 @@ export function SubscriptionsAdmin() {
   const [form, setForm] = useState({
     code: '',
     name: '',
-    priceRupees: 999,
+    priceRupees: 40000,
     maxTables: 12,
     maxStaff: 4,
     maxOrdersPerMonth: 600,
@@ -423,7 +423,7 @@ export function SubscriptionsAdmin() {
               <p className="font-display text-xl text-ivory-50">{plan.name}</p>
               <Badge tone={plan.isPublic ? 'lime' : 'neutral'}>{plan.isPublic ? 'public' : 'hidden'}</Badge>
             </div>
-            <p className="mt-1 text-sm text-lime-400">{formatMoney(plan.priceMinor)} / month</p>
+            <p className="mt-1 text-sm text-lime-400">{formatMoney(plan.priceMinor)} / year</p>
             <div className="mt-3 grid grid-cols-3 gap-2 rounded-xl border border-white/[0.07] bg-ink-950/40 p-2.5 text-center">
               <Cell label="Tables" value={plan.maxTables} />
               <Cell label="Staff" value={plan.maxStaff} />
